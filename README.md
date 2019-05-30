@@ -1,4 +1,4 @@
-# The-Game
+# The Game
 
 ## Description
 
