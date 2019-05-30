@@ -37,56 +37,117 @@ paths:
         description: "Pet object that needs to be added to the store"
         required: true
         schema:
-          $ref: "#/definitions/Lobby"
+          $ref: "#/definitions/Selection"
       responses:
         200:
           description: "null"
-  /user:
+  /lobby/edit:
+    put:
+      tags:
+      - "lobby"
+      summary: "Edits a currently existing lobby"
+      description: "Edits a currently existing lobby"
+      operationId: "editLobby"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "What needs to be edited in the lobby"
+        required: true
+        schema:
+          $ref: '#/definitions/Selection'
+      responses:
+        200:
+          description: "Operation successful"
+  /lobby/{lobbyName}:
+    get:
+      tags:
+      - "lobby"
+      summary: "Retrieves a lobby"
+      description: "Find a lobby by its name"
+      operationId: "getLobby"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "lobbyName"
+        in: "path"
+        description: "Name of lobby"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Operation successful"
+        400:
+          description: "Invalid lobby name"
+        404:
+          description: "Error not found"
+  /lobby/list:
+    get:
+      summary: "List all lobbies"
+      description: ""
+      operationId: "listLobbies"
+      produces:
+      - "appliation/json"
+      parameters:
+      - name: "lobbyName"
+        in: "query"
+        description: "Filter by lobby name"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200: 
+          description: "Operation successful"
+        404:
+          description: "Lobby name not found"
+  /votes/submit:
     post:
       tags:
-      - "user"
-      summary: "Create user"
-      description: "This can only be done by the logged in user."
+      - "votes"
+      summary: "Send votes to backend"
+      description: ""
       operationId: "createUser"
       produces:
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "Created user object"
+        description: "Created votes object"
         required: true
         schema:
-          $ref: "#/definitions/User"
+          $ref: "#/definitions/Votes"
       responses:
         default:
-          description: "successful operation"
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+          description: "Operation successful"
 definitions:
   User:
     type: "object"
     properties:
       name:
         type: "string"
-  Lobby:
+  Selection:
     type: "object"
     properties:
       lobbyName:
         type: "string"
-      selections:
+      options:
         type: "array"
         items: 
           type: "string"
+  Votes:
+    type: "object"
+    properties:
+      lobbyName:
+        type: "string"
+      user:
+        type: "string"
+      selectrion: 
+        type: "string"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
