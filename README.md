@@ -7,9 +7,9 @@ The Game is not a game, but a way to figure out what to do between multiple peop
 ## TODO
 - [x] Get openSUSE functioning
 - [x] Install git, android studio, java
-- [ ] Research HTTP posts
-- [ ] Research HTTP requests, headers, body
-- [ ] Research Json schema
+- [x] Research HTTP posts
+- [x] Research HTTP requests, headers, body
+- [x] Research Json schema
 - [ ] Research Java Jersey
 - [ ] Research Java Simple HTTP
 - [ ] Research Java Hibernate
