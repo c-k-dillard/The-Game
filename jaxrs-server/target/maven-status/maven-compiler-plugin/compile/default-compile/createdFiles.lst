@@ -2,6 +2,7 @@ io/swagger/model/Votes.class
 io/swagger/api/impl/VotesApiServiceImpl.class
 io/swagger/api/VotesApi.class
 io/swagger/model/Selection.class
+db/PGDriver.class
 io/swagger/api/VotesApiService.class
 io/swagger/api/impl/LobbyApiServiceImpl.class
 io/swagger/api/LobbyApiService.class
