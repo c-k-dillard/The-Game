@@ -10,7 +10,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "petstore.swagger.io"
-basePath: "/v2"
+basePath: "/"
 tags:
 - name: "lobby"
   description: "Operations concerning lobbies"
@@ -34,13 +34,13 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Pet object that needs to be added to the store"
+        description: "Information about the lobby"
         required: true
         schema:
           $ref: "#/definitions/Selection"
       responses:
         200:
-          description: "null"
+          description: ""
   /lobby/edit:
     put:
       tags:
@@ -83,7 +83,7 @@ paths:
         400:
           description: "Invalid lobby name"
         404:
-          description: "Error not found"
+          description: "Lobby not found"
   /lobby/list:
     get:
       summary: "List all lobbies"
@@ -105,6 +105,16 @@ paths:
           description: "Operation successful"
         404:
           description: "Lobby name not found"
+  /lobby/test:
+    get:
+      summary: "test"
+      description: "test"
+      operationId: "lobbyTest"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Operation successful"
   /votes/submit:
     post:
       tags:
@@ -125,11 +135,6 @@ paths:
         default:
           description: "Operation successful"
 definitions:
-  User:
-    type: "object"
-    properties:
-      name:
-        type: "string"
   Selection:
     type: "object"
     properties:
