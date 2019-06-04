@@ -21,16 +21,23 @@ public final class PGDriver {
 
             Statement stmt = null;
             String sql = "CREATE TABLE IF NOT EXISTS entries" +
-                    "(lobby TEXT NOT NULL, " +
-                    "users TEXT NOT NULL, " +
-                    "selection TEXT NOT NULL, " +
-                    "vote_count INT NOT NULL)";
+                    "(lobbies TEXT NOT NULL, " +
+                    " users TEXT NOT NULL, " +
+                    " selections TEXT NOT NULL, " +
+                    " vote_count INT NOT NULL)";
 
             stmt = database.createStatement();
             stmt.executeUpdate(sql);
-            stmt.close();
 
             System.out.println("Table *entries* created successfully");
+
+            sql = "CREATE TABLE IF NOT EXISTS options" +
+                    "(selections TEXT NOT NULL, " +
+                    " lobbies TEXT NOT NULL)";
+
+            stmt.executeUpdate(sql);
+            stmt.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
