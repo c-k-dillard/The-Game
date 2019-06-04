@@ -20,22 +20,32 @@ public final class PGDriver {
             System.out.println("Opened database successfully");
 
             Statement stmt = null;
-            String sql = "CREATE TABLE IF NOT EXISTS entries" +
+            stmt = database.createStatement();
+
+            String sql = "DROP TABLE IF EXISTS entries";
+            stmt.executeUpdate(sql);
+            System.out.println("Table *entries* dropped");
+
+            sql = "DROP TABLE IF EXISTS options";
+            stmt.executeUpdate(sql);
+            System.out.println("Table *options* dropped");
+
+            sql = "CREATE TABLE entries" +
                     "(lobbies TEXT NOT NULL, " +
                     " users TEXT NOT NULL, " +
                     " selections TEXT NOT NULL, " +
                     " vote_count INT NOT NULL)";
 
-            stmt = database.createStatement();
             stmt.executeUpdate(sql);
 
             System.out.println("Table *entries* created successfully");
 
-            sql = "CREATE TABLE IF NOT EXISTS options" +
+            sql = "CREATE TABLE options" +
                     "(selections TEXT NOT NULL, " +
                     " lobbies TEXT NOT NULL)";
 
             stmt.executeUpdate(sql);
+            System.out.println("Table *options* created successfully");
             stmt.close();
 
         } catch (Exception e) {
