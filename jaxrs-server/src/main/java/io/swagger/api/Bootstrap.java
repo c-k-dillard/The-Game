@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import db.PGDriver;
 import io.swagger.jaxrs.config.SwaggerContextService;
 import io.swagger.models.*;
 
@@ -27,5 +28,8 @@ public class Bootstrap extends HttpServlet {
     Swagger swagger = new Swagger().info(info);
 
     new SwaggerContextService().withServletConfig(config).updateSwagger(swagger);
+
+    // Open postgres connection
+    PGDriver.init();
   }
 }

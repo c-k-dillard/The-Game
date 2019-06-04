@@ -48,8 +48,6 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     @Override
     public Response lobbyTest(SecurityContext securityContext) throws NotFoundException {
         // do some testing!
-        PGDriver.init();
-
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "test!")).build();
     }
 }
