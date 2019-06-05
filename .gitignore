@@ -26,3 +26,4 @@ TheGameApplication/.idea/*
 jaxrs-server/.idea
 jaxrs-server/.swagger-codegen-ignore
 jaxrs-server/*.iml
+jaxrs-server/target/
