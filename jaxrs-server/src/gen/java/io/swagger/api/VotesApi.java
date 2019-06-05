@@ -11,6 +11,7 @@ import io.swagger.model.Votes;
 
 import java.util.Map;
 import java.util.List;
+
 import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
@@ -65,5 +66,6 @@ public class VotesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.createUser(body,securityContext);
+
     }
 }

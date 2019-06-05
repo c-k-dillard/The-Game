@@ -11,6 +11,7 @@ import io.swagger.model.Selection;
 
 import java.util.Map;
 import java.util.List;
+
 import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
@@ -117,6 +118,19 @@ public class LobbyApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class) })
     public Response lobbyTest(@Context SecurityContext securityContext)
     throws NotFoundException {
+
+        return delegate.listLobbies(lobbyName, securityContext);
+    }
+
+    @GET
+    @Path("/test")
+
+    @Produces({"application/json"})
+    @io.swagger.annotations.ApiOperation(value = "test", notes = "test", response = Void.class, tags = {})
+    @io.swagger.annotations.ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class)})
+    public Response lobbyTest(@Context SecurityContext securityContext)
+            throws NotFoundException {
         return delegate.lobbyTest(securityContext);
     }
 }

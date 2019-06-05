@@ -32,4 +32,5 @@ public class Bootstrap extends HttpServlet {
     // Open postgres connection
     PGDriver.init();
   }
+
 }
