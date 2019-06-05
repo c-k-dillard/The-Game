@@ -25,3 +25,4 @@ hs_err_pid*
 TheGameApplication/.idea/*
 jaxrs-server/.idea
 jaxrs-server/.swagger-codegen-ignore
+jaxrs-server/*.iml
