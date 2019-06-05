@@ -1,16 +1,15 @@
 swagger: "2.0"
 info:
-  description: "The Game"
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
   version: "1.0.0"
-  title: "The Game"
+  title: "Swagger Petstore"
   termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "todo"
+    email: "apiteam@swagger.io"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "the.game.io"
-
+host: "petstore.swagger.io"
 basePath: "/"
 tags:
 - name: "lobby"
@@ -42,7 +41,7 @@ paths:
       responses:
         200:
           description: ""
-  /lobby/{lobbyName}:
+  /lobby/edit:
     put:
       tags:
       - "lobby"
@@ -54,11 +53,6 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "lobbyName"
-        in: "path"
-        description: "Name of lobby to edit"
-        required: true
-        type: "string"
       - in: "body"
         name: "body"
         description: "What needs to be edited in the lobby"
@@ -157,10 +151,8 @@ definitions:
         type: "string"
       user:
         type: "string"
-      selection: 
+      selectrion: 
         type: "string"
-      count: 
-        type: "integer"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
