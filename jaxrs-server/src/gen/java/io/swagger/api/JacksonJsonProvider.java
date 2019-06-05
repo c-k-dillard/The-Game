@@ -24,6 +24,7 @@ public class JacksonJsonProvider extends JacksonJaxbJsonProvider {
                 .registerModule(new JodaModule())
                 .setDateFormat(new RFC3339DateFormat());
 
+
         setMapper(objectMapper);
     }
 }
