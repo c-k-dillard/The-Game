@@ -8,7 +8,8 @@ public final class PGDriver {
     public static Connection database;
     private static String url = "jdbc:postgresql://localhost:5432/cdillard";
 
-    private PGDriver() {}
+    private PGDriver() {
+    }
 
     public static void init() {
         database = null;
@@ -53,6 +54,5 @@ public final class PGDriver {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
     }
 }
