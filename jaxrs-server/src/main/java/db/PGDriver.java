@@ -6,27 +6,30 @@ import java.sql.Statement;
 
 public final class PGDriver {
     public static Connection database;
-    private static String url = "jdbc:postgresql://localhost:5432/cdillard";
+    private static String url = "jdbc:postgresql://localhost:5432/";
 
     private PGDriver() {}
 
-    public static void init() {
-        database = null;
+    public static void init(Connection db, String dbName, String username, String pass) {
+        db = null;
 
         try {
             Class.forName("org.postgresql.Driver");
-            database = DriverManager.getConnection(url, "cdillard", "asdf");
-
+            db = DriverManager.getConnection(url + dbName, username, pass);
             System.out.println("Opened database successfully");
 
             Statement stmt = null;
-            String sql = "CREATE TABLE IF NOT EXISTS entries" +
-                    "(lobby TEXT NOT NULL, " +
-                    "users TEXT NOT NULL, " +
-                    "selection TEXT NOT NULL, " +
-                    "vote_count INT NOT NULL)";
+            stmt = db.createStatement();
 
-            stmt = database.createStatement();
+            // Dropping for safety. Creates main table afterwards
+            String sql = "DROP TABLE IF EXISTS entries";
+            stmt.executeUpdate(sql);
+
+            sql = "CREATE TABLE  entries" +
+                    "(lobbies TEXT NOT NULL, " +
+                    " users TEXT NOT NULL, " +
+                    " selections TEXT NOT NULL, " +
+                    " vote_count INT NOT NULL)";
             stmt.executeUpdate(sql);
             stmt.close();
 
@@ -36,6 +39,19 @@ public final class PGDriver {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
 
+    /**
+     * Closes connection to database parameter
+     * @param db
+     */
+    public static void close(Connection db) {
+        try {
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 }

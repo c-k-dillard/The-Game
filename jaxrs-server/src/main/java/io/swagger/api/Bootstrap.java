@@ -30,6 +30,6 @@ public class Bootstrap extends HttpServlet {
     new SwaggerContextService().withServletConfig(config).updateSwagger(swagger);
 
     // Open postgres connection
-    PGDriver.init();
+    PGDriver.init(PGDriver.database, "cdillard", "cdillard", "asdf");
   }
 }
