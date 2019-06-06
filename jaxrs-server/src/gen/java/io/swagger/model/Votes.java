@@ -14,125 +14,130 @@
 package io.swagger.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.*;
 
 /**
  * Votes
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2019-06-03T17:38:12.196Z")
-public class Votes   {
-  @JsonProperty("lobbyName")
-  private String lobbyName = null;
+public class Votes {
+    @JsonProperty("lobbyName")
+    private String lobbyName = null;
 
-  @JsonProperty("user")
-  private String user = null;
+    @JsonProperty("user")
+    private String user = null;
 
-  @JsonProperty("selectrion")
-  private String selectrion = null;
+    @JsonProperty("selectrion")
+    private String selectrion = null;
 
-  public Votes lobbyName(String lobbyName) {
-    this.lobbyName = lobbyName;
-    return this;
-  }
-
-  /**
-   * Get lobbyName
-   * @return lobbyName
-   **/
-  @JsonProperty("lobbyName")
-  @ApiModelProperty(value = "")
-  public String getLobbyName() {
-    return lobbyName;
-  }
-
-  public void setLobbyName(String lobbyName) {
-    this.lobbyName = lobbyName;
-  }
-
-  public Votes user(String user) {
-    this.user = user;
-    return this;
-  }
-
-  /**
-   * Get user
-   * @return user
-   **/
-  @JsonProperty("user")
-  @ApiModelProperty(value = "")
-  public String getUser() {
-    return user;
-  }
-
-  public void setUser(String user) {
-    this.user = user;
-  }
-
-  public Votes selectrion(String selectrion) {
-    this.selectrion = selectrion;
-    return this;
-  }
-
-  /**
-   * Get selectrion
-   * @return selectrion
-   **/
-  @JsonProperty("selectrion")
-  @ApiModelProperty(value = "")
-  public String getSelectrion() {
-    return selectrion;
-  }
-
-  public void setSelectrion(String selectrion) {
-    this.selectrion = selectrion;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    public Votes lobbyName(String lobbyName) {
+        this.lobbyName = lobbyName;
+        return this;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    /**
+     * Get lobbyName
+     *
+     * @return lobbyName
+     **/
+    @JsonProperty("lobbyName")
+    @ApiModelProperty(value = "")
+    public String getLobbyName() {
+        return lobbyName;
     }
-    Votes votes = (Votes) o;
-    return Objects.equals(this.lobbyName, votes.lobbyName) &&
-        Objects.equals(this.user, votes.user) &&
-        Objects.equals(this.selectrion, votes.selectrion);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(lobbyName, user, selectrion);
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Votes {\n");
-    
-    sb.append("    lobbyName: ").append(toIndentedString(lobbyName)).append("\n");
-    sb.append("    user: ").append(toIndentedString(user)).append("\n");
-    sb.append("    selectrion: ").append(toIndentedString(selectrion)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public void setLobbyName(String lobbyName) {
+        this.lobbyName = lobbyName;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public Votes user(String user) {
+        this.user = user;
+        return this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return user
+     **/
+    @JsonProperty("user")
+    @ApiModelProperty(value = "")
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public Votes selectrion(String selectrion) {
+        this.selectrion = selectrion;
+        return this;
+    }
+
+    /**
+     * Get selectrion
+     *
+     * @return selectrion
+     **/
+    @JsonProperty("selectrion")
+    @ApiModelProperty(value = "")
+    public String getSelectrion() {
+        return selectrion;
+    }
+
+    public void setSelectrion(String selectrion) {
+        this.selectrion = selectrion;
+    }
+
+
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Votes votes = (Votes) o;
+        return Objects.equals(this.lobbyName, votes.lobbyName) &&
+                Objects.equals(this.user, votes.user) &&
+                Objects.equals(this.selectrion, votes.selectrion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lobbyName, user, selectrion);
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Votes {\n");
+
+        sb.append("    lobbyName: ").append(toIndentedString(lobbyName)).append("\n");
+        sb.append("    user: ").append(toIndentedString(user)).append("\n");
+        sb.append("    selectrion: ").append(toIndentedString(selectrion)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }
 

@@ -24,10 +24,11 @@ public final class PGDriver {
 
     /**
      * Returns a connection with much of the initialization process for a proper database connection completed.
-     * @param db The database variable being connected to.
-     * @param dbName The name of the database.
+     *
+     * @param db       The database variable being connected to.
+     * @param dbName   The name of the database.
      * @param username The username to login.
-     * @param pass The password for the user.
+     * @param pass     The password for the user.
      * @return
      */
     public static Connection establishConnection(Connection db, String dbName, String username, String pass) {
@@ -45,8 +46,9 @@ public final class PGDriver {
 
     /**
      * Executes a SQL statement in a database.
-     * @param db The database being edited.
-     * @param sql The statement.
+     *
+     * @param db         The database being edited.
+     * @param sql        The statement.
      * @param descriptor A descriptor of the statement for verbosity (optional).
      */
     public static void executeStmt(Connection db, String sql, String descriptor) {
@@ -73,6 +75,7 @@ public final class PGDriver {
 
     /**
      * Returns a closed connection database.
+     *
      * @param db The database that is being closed.
      */
     public static Connection close(Connection db) {
@@ -88,6 +91,7 @@ public final class PGDriver {
 
     /**
      * The same exception handling was being used so this method is used in place of it.
+     *
      * @param e The exception.
      */
     public static void exceptionHandle(Exception e) {

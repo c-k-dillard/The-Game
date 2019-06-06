@@ -52,7 +52,6 @@ public class PGDriverTest {
     }
 
 
-
     @Test
     public void closeTest() {
         testData = PGDriver.close(testData);
