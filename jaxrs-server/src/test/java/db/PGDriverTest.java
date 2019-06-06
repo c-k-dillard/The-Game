@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
@@ -13,7 +14,7 @@ public class PGDriverTest {
 
     @Before
     public void init() {
-        testData = PGDriver.establishConnection(testData, "test", "test", "test");
+        testData = PGDriver.establishConnection("test", "test", "test");
     }
 
     @Test
@@ -27,7 +28,7 @@ public class PGDriverTest {
 
             // Test select statement
             Statement stmt = testData.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM entries");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM entries WHERE users = 'chase'");
 
             while (rs.next()) {
                 lobbies = rs.getString("lobbies");

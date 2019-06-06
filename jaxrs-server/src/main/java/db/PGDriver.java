@@ -25,23 +25,18 @@ public final class PGDriver {
     /**
      * Returns a connection with much of the initialization process for a proper database connection completed.
      *
-     * @param db       The database variable being connected to.
      * @param dbName   The name of the database.
      * @param username The username to login.
      * @param pass     The password for the user.
-     * @return
+     * @return         Returns the connection.
      */
-    public static Connection establishConnection(Connection db, String dbName, String username, String pass) {
-        try {
-            db = null;
-            Class.forName("org.postgresql.Driver");
-            db = DriverManager.getConnection(url + dbName, username, pass);
-            System.out.println("Opened database : " + db.getCatalog());
-        } catch (Exception e) {
-            exceptionHandle(e);
-        }
-
-        return db;
+    public static Connection establishConnection(String dbName, String username, String pass) {
+            try {
+                Class.forName("org.postgresql.Driver");
+                return DriverManager.getConnection(url + dbName, username, pass);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 
     /**
@@ -56,6 +51,7 @@ public final class PGDriver {
             Statement stmt = db.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
+
             System.out.println("Executed sql statement : " + descriptor);
         } catch (Exception e) {
             exceptionHandle(e);
@@ -67,7 +63,8 @@ public final class PGDriver {
             Statement stmt = db.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-            System.out.println("Executed sql statement");
+
+            System.out.println("Executed sql statement.");
         } catch (Exception e) {
             exceptionHandle(e);
         }
@@ -97,6 +94,5 @@ public final class PGDriver {
     public static void exceptionHandle(Exception e) {
         e.printStackTrace();
         System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        System.exit(0);
     }
 }

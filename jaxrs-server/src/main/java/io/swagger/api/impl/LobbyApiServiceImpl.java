@@ -24,7 +24,8 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     @Override
     public Response createLobby(Selection body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+        System.out.println(body);
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "created!")).build();
     }
 
     @Override

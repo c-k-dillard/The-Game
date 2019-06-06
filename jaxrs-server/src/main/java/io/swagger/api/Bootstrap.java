@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import java.sql.SQLException;
 
 public class Bootstrap extends HttpServlet {
     @Override
@@ -30,9 +31,8 @@ public class Bootstrap extends HttpServlet {
         new SwaggerContextService().withServletConfig(config).updateSwagger(swagger);
 
         // Open postgres connection
-//    PGDriver.init(PGDriver.database, "cdillard", "cdillard", "asdf");
         PGDriver.database =
-                PGDriver.establishConnection(PGDriver.database, "cdillard", "cdillard", "asdf");
+                PGDriver.establishConnection("cdillard", "cdillard", "asdf");
 
         PGDriver.executeStmt(PGDriver.database, PGDriver.drop, "Drop");
         PGDriver.executeStmt(PGDriver.database, PGDriver.create, "Create");
