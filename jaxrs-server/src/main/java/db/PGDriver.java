@@ -29,7 +29,7 @@ public final class PGDriver {
      * @param dbName   The name of the database.
      * @param username The username to login.
      * @param pass     The password for the user.
-     * @return
+     * @return         Returns the connection.
      */
     public static Connection establishConnection(Connection db, String dbName, String username, String pass) {
         try {
@@ -56,6 +56,7 @@ public final class PGDriver {
             Statement stmt = db.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
+
             System.out.println("Executed sql statement : " + descriptor);
         } catch (Exception e) {
             exceptionHandle(e);
@@ -67,7 +68,8 @@ public final class PGDriver {
             Statement stmt = db.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-            System.out.println("Executed sql statement");
+
+            System.out.println("Executed sql statement.");
         } catch (Exception e) {
             exceptionHandle(e);
         }
