@@ -34,7 +34,9 @@ public class Bootstrap extends HttpServlet {
         PGDriver.database =
                 PGDriver.establishConnection("cdillard", "cdillard", "asdf");
 
-        PGDriver.executeStmt(PGDriver.database, PGDriver.drop, "Drop");
-        PGDriver.executeStmt(PGDriver.database, PGDriver.create, "Create");
+        PGDriver.executeStmt(PGDriver.database, PGDriver.dropEntries, "Drop entries");
+        PGDriver.executeStmt(PGDriver.database, PGDriver.createEntries, "Create entries");
+        PGDriver.executeStmt(PGDriver.database, PGDriver.dropSelections, "Drop options");
+        PGDriver.executeStmt(PGDriver.database, PGDriver.createSelections, "Create options");
     }
 }

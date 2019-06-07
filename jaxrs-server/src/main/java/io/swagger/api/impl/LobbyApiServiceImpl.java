@@ -7,6 +7,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.Selection;
 
+import java.sql.Statement;
 import java.util.List;
 
 import io.swagger.api.NotFoundException;
@@ -25,6 +26,25 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     public Response createLobby(Selection body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         System.out.println(body);
+
+        // Generate SQL Statement(s)
+        try {
+            PGDriver.database.setAutoCommit(false);
+            Statement stmt = PGDriver.database.createStatement();
+
+            for (String option : body.getOptions()) {
+                String sql = String.format("INSERT INTO selections (lobby_name, options)" +
+                        "VALUES ('%s', '%s');", body.getLobbyName(), option);
+                stmt.executeUpdate(sql);
+            }
+
+            // Close statement and commit all SQL statements to database.
+            stmt.close();
+            PGDriver.database.commit();
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "created!")).build();
     }
 

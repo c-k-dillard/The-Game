@@ -100,11 +100,8 @@ paths:
       - name: "lobbyName"
         in: "query"
         description: "Filter by lobby name"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
+        required: false
+        type: "string"
       responses:
         200: 
           description: "Operation successful"

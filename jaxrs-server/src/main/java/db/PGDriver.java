@@ -1,6 +1,5 @@
 package db;
 
-import javax.print.DocFlavor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -9,13 +8,19 @@ public final class PGDriver {
     public static Connection database;
 
     // SQL commands to run on initialization
-    public static final String drop = "DROP TABLE IF EXISTS entries";
-    public static final String create =
+    public static final String dropEntries = "DROP TABLE IF EXISTS entries";
+    public static final String createEntries =
             "CREATE TABLE  entries" +
-                    "(lobbies TEXT NOT NULL, " +
+                    "(lobbies TEXT NOT NULL PRIMARY KEY, " +
                     " users TEXT NOT NULL, " +
                     " selections TEXT NOT NULL, " +
                     " vote_count INT NOT NULL)";
+
+    public static final String dropSelections = "DROP TABLE IF EXISTS selections";
+    public static final String createSelections =
+            "CREATE TABLE selections " +
+                    "(lobby_name TEXT NOT NULL," +
+                    " options TEXT NOT NULL)";
 
     private static final String url = "jdbc:postgresql://localhost:5432/";
 
