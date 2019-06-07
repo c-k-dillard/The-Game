@@ -107,7 +107,7 @@ public class LobbyApi {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class),
 
             @io.swagger.annotations.ApiResponse(code = 404, message = "Lobby name not found", response = Void.class)})
-    public Response listLobbies(@ApiParam(value = "Filter by lobby name", required = true) @QueryParam("lobbyName") List<String> lobbyName
+    public Response listLobbies(@ApiParam(value = "Filter by lobby name", required = false) @QueryParam("lobbyName") String lobbyName
             , @Context SecurityContext securityContext)
             throws NotFoundException {
         return delegate.listLobbies(lobbyName, securityContext);

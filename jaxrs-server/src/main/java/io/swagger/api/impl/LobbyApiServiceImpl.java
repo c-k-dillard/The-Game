@@ -61,7 +61,7 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     }
 
     @Override
-    public Response listLobbies(@NotNull List<String> lobbyName, SecurityContext securityContext) throws NotFoundException {
+    public Response listLobbies(String lobbyName, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

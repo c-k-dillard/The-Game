@@ -20,6 +20,6 @@ public abstract class LobbyApiService {
     public abstract Response createLobby(Selection body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response editLobby(Selection body,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getLobby(String lobbyName,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response listLobbies( @NotNull List<String> lobbyName,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response listLobbies(String lobbyName,SecurityContext securityContext) throws NotFoundException;
     public abstract Response lobbyTest(SecurityContext securityContext) throws NotFoundException;
 }
