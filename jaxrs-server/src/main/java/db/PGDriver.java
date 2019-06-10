@@ -33,15 +33,15 @@ public final class PGDriver {
      * @param dbName   The name of the database.
      * @param username The username to login.
      * @param pass     The password for the user.
-     * @return         Returns the connection.
+     * @return Returns the connection.
      */
     public static Connection establishConnection(String dbName, String username, String pass) {
-            try {
-                Class.forName("org.postgresql.Driver");
-                return DriverManager.getConnection(url + dbName, username, pass);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            Class.forName("org.postgresql.Driver");
+            return DriverManager.getConnection(url + dbName, username, pass);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
