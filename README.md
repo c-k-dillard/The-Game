@@ -10,8 +10,8 @@ The Game is not a game, but a way to figure out what to do between multiple peop
 - [x] Research HTTP posts
 - [x] Research HTTP requests, headers, body
 - [x] Research Json schema
-- [ ] Research Java Jersey
-- [ ] Research Java Simple HTTP
-- [ ] Research Java Hibernate
-- [ ] Research ORM (Object-Relation Mapper)
-- [ ] Create basic application template
+- [x] Research Java Jersey
+- [x] Research Java Simple HTTP
+- [x] Research Java Hibernate
+- [x] Research ORM (Object-Relation Mapper)
+- [x] Create basic application template
