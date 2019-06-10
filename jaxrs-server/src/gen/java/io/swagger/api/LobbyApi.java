@@ -69,6 +69,19 @@ public class LobbyApi {
         return delegate.createLobby(body, securityContext);
     }
 
+    @GET
+    @Path("/get/{lobbyName}")
+
+    @Produces({"application/json"})
+    @io.swagger.annotations.ApiOperation(value = "Get information on lobby", notes = "", response = String.class, responseContainer = "Get", tags = {})
+    @io.swagger.annotations.ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = String.class, responseContainer = "Get"),
+            @io.swagger.annotations.ApiResponse(code = 404, message = "Lobby name not found", response = Void.class)})
+    public Response getLobby(@ApiParam(value = "Name of lobby to get", required = true) @PathParam("lobbyName") String lobbyName,
+                             @Context SecurityContext securityContext) throws NotFoundException {
+        return delegate.getLobby(lobbyName, securityContext);
+    }
+
     @PUT
     @Path("/{lobbyName}")
     @Consumes({"application/json"})

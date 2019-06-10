@@ -8,6 +8,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.Selection;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
@@ -59,16 +60,42 @@ public class LobbyApiServiceImpl extends LobbyApiService {
 
     @Override
     public Response getLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException {
-        // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+        // Query database for entries from lobby lobbyName
+        JSONArray json = new JSONArray();
+
+        try {
+            Statement stmt = PGDriver.database.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT options FROM SELECTIONS WHERE " +
+                    "lobby_name = '" + lobbyName + "'");
+
+            while (rs.next()) {
+                json.add(rs.getString("options"));
+            }
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+        return Response.ok().entity(json).build();
     }
 
     @Override
     public Response listLobbies(@QueryParam("lobbyName") String lobbyName, SecurityContext securityContext) throws NotFoundException {
-        // do some magic!
+        // Create json array
         System.out.println("Check2");
         JSONArray json = new JSONArray();
-        json.add(lobbyName);
+
+        try {
+            Statement stmt = PGDriver.database.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT DISTINCT lobby_name FROM selections " +
+                    "WHERE lobby_name LIKE" +
+                    " '%" + lobbyName + "%' ORDER BY lobby_name ASC;");
+
+            while (rs.next()) {
+                json.add(rs.getString("lobby_name"));
+            }
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
         return Response.ok().entity(json.toJSONString()).build();
     }
 

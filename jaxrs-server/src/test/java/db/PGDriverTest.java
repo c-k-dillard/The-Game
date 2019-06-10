@@ -58,6 +58,8 @@ public class PGDriverTest {
         // Close all streams
         rs.close();
         stmt.close();
+        testData.commit();
+        testData.commit();
         testData.close();
 
         // Test for proper results
@@ -80,6 +82,9 @@ public class PGDriverTest {
             lobby = rs.getString("lobby_name");
             option = rs.getString("options");
         }
+
+        testData.commit();
+        stmt.close();
 
         Assert.assertEquals("foo", lobby);
         Assert.assertEquals("bar", option);

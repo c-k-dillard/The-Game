@@ -11,10 +11,11 @@ public final class PGDriver {
     public static final String dropEntries = "DROP TABLE IF EXISTS entries";
     public static final String createEntries =
             "CREATE TABLE  entries" +
-                    "(lobbies TEXT NOT NULL PRIMARY KEY, " +
+                    "(lobbies TEXT NOT NULL, " +
                     " users TEXT NOT NULL, " +
                     " selections TEXT NOT NULL, " +
-                    " vote_count INT NOT NULL)";
+                    " vote_count INT NOT NULL," +
+                    " UNIQUE (lobbies, users, selections));";
 
     public static final String dropSelections = "DROP TABLE IF EXISTS selections";
     public static final String createSelections =

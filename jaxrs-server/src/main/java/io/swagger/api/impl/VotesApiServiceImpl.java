@@ -23,15 +23,19 @@ import javax.validation.constraints.*;
 public class VotesApiServiceImpl extends VotesApiService {
     @Override
     public Response createVote(Votes body, SecurityContext securityContext) throws NotFoundException {
-        // do some magic!
-
         // Insert information into database
         try {
             Statement stmt = PGDriver.database.createStatement();
             String sql = String.format("INSERT INTO entries (lobbies, users, selections, vote_count)" +
-                    "VALUES('%s', '%s', '%s', %d);", body.getLobbyName(), body.getUser(), body.getSelection(), body.getCount());
+                    " VALUES('%s', '%s', '%s', %d)" +
+                    " ON CONFLICT (lobbies, users, selections)" +
+                    " DO UPDATE" +
+                    " SET vote_count = EXCLUDED.vote_count;", body.getLobbyName(), body.getUser(),
+                    body.getSelection(), body.getCount());
 
+            // If not already set to false, set autocommit to false because it interferes with other commands
             PGDriver.database.setAutoCommit(false);
+
             stmt.executeUpdate(sql);
             stmt.close();
             PGDriver.database.commit();
@@ -39,6 +43,6 @@ public class VotesApiServiceImpl extends VotesApiService {
             PGDriver.exceptionHandle(e);
         }
 
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "Voted!")).build();
     }
 }
