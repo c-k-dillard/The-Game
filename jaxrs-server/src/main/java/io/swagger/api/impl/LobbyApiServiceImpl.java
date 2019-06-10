@@ -2,6 +2,7 @@ package io.swagger.api.impl;
 
 import db.PGDriver;
 
+import io.swagger.annotations.ApiParam;
 import io.swagger.api.*;
 import io.swagger.model.*;
 
@@ -15,7 +16,9 @@ import io.swagger.api.NotFoundException;
 import java.io.InputStream;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.json.simple.JSONArray;
 
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.validation.constraints.*;
@@ -49,7 +52,7 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     }
 
     @Override
-    public Response editLobby(Selection body, SecurityContext securityContext) throws NotFoundException {
+    public Response editLobby(String lobbyName, Selection body, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -61,9 +64,12 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     }
 
     @Override
-    public Response listLobbies(String lobbyName, SecurityContext securityContext) throws NotFoundException {
+    public Response listLobbies(@QueryParam("lobbyName") String lobbyName, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+        System.out.println("Check2");
+        JSONArray json = new JSONArray();
+        json.add(lobbyName);
+        return Response.ok().entity(json.toJSONString()).build();
     }
 
     @Override

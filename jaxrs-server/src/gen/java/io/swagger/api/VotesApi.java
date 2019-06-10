@@ -61,9 +61,9 @@ public class VotesApi  {
     @io.swagger.annotations.ApiOperation(value = "Send votes to backend", notes = "", response = Void.class, tags={ "votes", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class) })
-    public Response createUser(@ApiParam(value = "Created votes object" ,required=true) Votes body
+    public Response createVote(@ApiParam(value = "Created votes object" ,required=true) Votes body
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.createUser(body,securityContext);
+        return delegate.createVote(body,securityContext);
     }
 }

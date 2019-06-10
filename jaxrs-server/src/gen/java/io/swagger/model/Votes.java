@@ -33,8 +33,11 @@ public class Votes {
     @JsonProperty("user")
     private String user = null;
 
-    @JsonProperty("selectrion")
-    private String selectrion = null;
+    @JsonProperty("selection")
+    private String selection = null;
+
+    @JsonProperty("count")
+    private int count = 0;
 
     public Votes lobbyName(String lobbyName) {
         this.lobbyName = lobbyName;
@@ -76,25 +79,30 @@ public class Votes {
         this.user = user;
     }
 
-    public Votes selectrion(String selectrion) {
-        this.selectrion = selectrion;
+    public Votes selection(String selectrion) {
+        this.selection = selectrion;
         return this;
     }
 
     /**
-     * Get selectrion
+     * Get selection
      *
      * @return selectrion
      **/
-    @JsonProperty("selectrion")
+    @JsonProperty("selection")
     @ApiModelProperty(value = "")
-    public String getSelectrion() {
-        return selectrion;
+    public String getSelection() {
+        return selection;
     }
 
-    public void setSelectrion(String selectrion) {
-        this.selectrion = selectrion;
+    public void setSelection(String selection) {
+        this.selection = selection;
     }
+
+    @JsonProperty("count")
+    @ApiModelProperty(value = "")
+    public int getCount() { return count; }
+    public void setCount(int count) { this.count = count; }
 
 
     @Override
@@ -108,12 +116,12 @@ public class Votes {
         Votes votes = (Votes) o;
         return Objects.equals(this.lobbyName, votes.lobbyName) &&
                 Objects.equals(this.user, votes.user) &&
-                Objects.equals(this.selectrion, votes.selectrion);
+                Objects.equals(this.selection, votes.selection);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lobbyName, user, selectrion);
+        return Objects.hash(lobbyName, user, selection);
     }
 
 
@@ -124,7 +132,7 @@ public class Votes {
 
         sb.append("    lobbyName: ").append(toIndentedString(lobbyName)).append("\n");
         sb.append("    user: ").append(toIndentedString(user)).append("\n");
-        sb.append("    selectrion: ").append(toIndentedString(selectrion)).append("\n");
+        sb.append("    selection: ").append(toIndentedString(selection)).append("\n");
         sb.append("}");
         return sb.toString();
     }
