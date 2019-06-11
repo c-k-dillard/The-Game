@@ -53,16 +53,42 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     }
 
     @Override
+    public Response removeFromLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException {
+        
+
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "created!")).build();
+    }
+
+    @Override
+    public Response addToLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException {
+        try {
+            // Insert statement addition to lobby selection
+            Statement stmt = PGDriver.database.createStatement();
+            PGDriver.database.setAutoCommit(false);
+            String sql = String.format("INSERT INTO selections (lobby_name, options)" +
+                    "VALUES ('%s', '%s');", body.getLobbyName(), body.getOption());
+            stmt.executeUpdate(sql);
+
+            // Close connections and commit
+            stmt.close();
+            PGDriver.database.commit();
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    }
+    @Override
     public Response editLobby(String lobbyName, Selection body, SecurityContext securityContext) throws NotFoundException {
-        // do some magic!
+
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
 
     @Override
     public Response getLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException {
-        // Query database for entries from lobby lobbyName
         JSONArray json = new JSONArray();
 
+        // Query database for entries from lobby lobbyName
         try {
             Statement stmt = PGDriver.database.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT options FROM SELECTIONS WHERE " +

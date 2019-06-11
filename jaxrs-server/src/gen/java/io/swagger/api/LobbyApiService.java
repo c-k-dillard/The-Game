@@ -29,4 +29,8 @@ public abstract class LobbyApiService {
     public abstract Response listLobbies(String lobbyName, SecurityContext securityContext) throws NotFoundException;
 
     public abstract Response lobbyTest(SecurityContext securityContext) throws NotFoundException;
+
+    public abstract Response addToLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
+
+    public abstract Response removeFromLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
 }

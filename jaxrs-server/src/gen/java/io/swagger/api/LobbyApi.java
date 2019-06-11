@@ -96,6 +96,34 @@ public class LobbyApi {
         return delegate.editLobby(lobbyName, body, securityContext);
     }
 
+    @PUT
+    @Path("/add/{lobbyName}")
+    @Consumes({"application/json"})
+    @Produces({"application/json"})
+    @io.swagger.annotations.ApiOperation(value = "Edits a currently existing lobby", notes = "Edits a currently existing lobby", response = Void.class, tags = {"lobby",})
+    @io.swagger.annotations.ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class)})
+    public Response addToLobby(@ApiParam(value = "Name of lobby to edit", required = true) @PathParam("lobbyName") String lobbyName
+            , @ApiParam(value = "What needs to be edited in the lobby", required = true) Alteration body
+            , @Context SecurityContext securityContext)
+            throws NotFoundException {
+        return delegate.addToLobby(lobbyName, body, securityContext);
+    }
+
+    @PUT
+    @Path("/del/{lobbyName}")
+    @Consumes({"application/json"})
+    @Produces({"application/json"})
+    @io.swagger.annotations.ApiOperation(value = "Edits a currently existing lobby", notes = "Edits a currently existing lobby", response = Void.class, tags = {"lobby",})
+    @io.swagger.annotations.ApiResponses(value = {
+            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class)})
+    public Response removeFromLobby(@ApiParam(value = "Name of lobby to edit", required = true) @PathParam("lobbyName") String lobbyName
+            , @ApiParam(value = "What needs to be edited in the lobby", required = true) Alteration body
+            , @Context SecurityContext securityContext)
+            throws NotFoundException {
+        return delegate.removeFromLobby(lobbyName, body, securityContext);
+    }
+
     @GET
     @Path("/list")
 
