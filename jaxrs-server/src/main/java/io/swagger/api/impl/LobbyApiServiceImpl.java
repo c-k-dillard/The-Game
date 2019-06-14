@@ -10,14 +10,19 @@ import io.swagger.model.Selection;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.swagger.api.NotFoundException;
 
 import java.io.InputStream;
+import java.util.Map;
 
+import io.swagger.util.Json;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
@@ -54,9 +59,23 @@ public class LobbyApiServiceImpl extends LobbyApiService {
 
     @Override
     public Response removeFromLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException {
-        
+        try {
+            // Remove row from database
+            Statement stmt = PGDriver.database.createStatement();
+            PGDriver.database.setAutoCommit(false);
+            String sql = String.format("DELETE FROM selections " +
+                    "WHERE lobby_name = '%s' AND options = '%s'",
+                    lobbyName, body.getOption());
 
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "created!")).build();
+            // Close statement and execute sql
+            stmt.executeUpdate(sql);
+            stmt.close();
+            PGDriver.database.commit();
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "deleted!")).build();
     }
 
     @Override
@@ -65,11 +84,12 @@ public class LobbyApiServiceImpl extends LobbyApiService {
             // Insert statement addition to lobby selection
             Statement stmt = PGDriver.database.createStatement();
             PGDriver.database.setAutoCommit(false);
+
             String sql = String.format("INSERT INTO selections (lobby_name, options)" +
-                    "VALUES ('%s', '%s');", body.getLobbyName(), body.getOption());
+                    "VALUES ('%s', '%s');", lobbyName, body.getOption());
             stmt.executeUpdate(sql);
 
-            // Close connections and commit
+            // Close statement and commit
             stmt.close();
             PGDriver.database.commit();
         } catch (Exception e) {
@@ -79,9 +99,26 @@ public class LobbyApiServiceImpl extends LobbyApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response editLobby(String lobbyName, Selection body, SecurityContext securityContext) throws NotFoundException {
+    public Response editLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException {
+        try {
+            Statement stmt = PGDriver.database.createStatement();
+            PGDriver.database.setAutoCommit(false);
 
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+            String sql = String.format("UPDATE selections " +
+                    "SET options = '%s' " +
+                    "WHERE options = '%s' AND lobby_name = '%s'",
+                    body.getReplacement(), body.getOption(), lobbyName);
+
+            stmt.executeUpdate(sql);
+
+            // Close statement and commit
+            stmt.close();
+            PGDriver.database.commit();
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
+        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "edited!")).build();
     }
 
     @Override
@@ -126,8 +163,56 @@ public class LobbyApiServiceImpl extends LobbyApiService {
     }
 
     @Override
-    public Response lobbyTest(SecurityContext securityContext) throws NotFoundException {
-        // do some testing!
-        return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "test!")).build();
+    public Response printVotesInLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException {
+        // Print all voting information
+//        List<FinalVote> selection = new ArrayList<FinalVote>();
+        JSONObject voteMap = new JSONObject();
+
+        try {
+            Statement stmt = PGDriver.database.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            PGDriver.database.setAutoCommit(false);
+
+            // Create list of selections
+//            ResultSet rs = stmt.executeQuery("SELECT options FROM selections WHERE lobby_name = '" +
+//                    lobbyName + "';");
+//
+//            while (rs.next()) {
+//                selection.add(new FinalVote(rs.getString("options")));
+//            }
+
+            // Use selections list to establish voting information
+            ResultSet rs = stmt.executeQuery("SELECT users, selections, vote_count from entries WHERE " +
+                    "lobbies = '" + lobbyName + "';");
+
+            while (rs.next()) {
+                String select = rs.getString("selections");
+                int voteCount = rs.getInt("vote_count");
+//                for (int i = 0; i < selection.size(); ++i) {
+//
+//                    if (rs.getString("selections").equals(selection.get(i).selection)) {
+//                        selection.get(i).vote += rs.getInt("vote_count");
+//                    }
+//                }
+
+                if (voteMap.containsKey(select)) {
+                    int currentCount = (int)voteMap.get(select);
+                    voteMap.put(select, currentCount + voteCount);
+                } else {
+                    voteMap.put(select, voteCount);
+                }
+            }
+
+//            for (int i = 0; i < selection.size(); ++i) {
+//                JSONObject j = new JSONObject();
+//                j.put("selection", selection.get(i).selection);
+//                j.put("vote", selection.get(i).vote);
+//                ja.add(j);
+//
+//            }
+        } catch (Exception e) {
+            PGDriver.exceptionHandle(e);
+        }
+
+        return Response.ok().entity(voteMap.toJSONString()).build();
     }
 }

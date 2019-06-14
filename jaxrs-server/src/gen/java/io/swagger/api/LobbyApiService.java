@@ -22,15 +22,15 @@ import javax.validation.constraints.*;
 public abstract class LobbyApiService {
     public abstract Response createLobby(Selection body, SecurityContext securityContext) throws NotFoundException;
 
-    public abstract Response editLobby(String lobbyName, Selection body, SecurityContext securityContext) throws NotFoundException;
+    public abstract Response editLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
 
     public abstract Response getLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException;
 
     public abstract Response listLobbies(String lobbyName, SecurityContext securityContext) throws NotFoundException;
 
-    public abstract Response lobbyTest(SecurityContext securityContext) throws NotFoundException;
-
     public abstract Response addToLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
 
     public abstract Response removeFromLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
+
+    public abstract Response printVotesInLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException;
 }

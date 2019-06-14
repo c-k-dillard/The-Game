@@ -90,7 +90,7 @@ public class LobbyApi {
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class)})
     public Response editLobby(@ApiParam(value = "Name of lobby to edit", required = true) @PathParam("lobbyName") String lobbyName
-            , @ApiParam(value = "What needs to be edited in the lobby", required = true) Selection body
+            , @ApiParam(value = "What needs to be edited in the lobby", required = true) Alteration body
             , @Context SecurityContext securityContext)
             throws NotFoundException {
         return delegate.editLobby(lobbyName, body, securityContext);
@@ -140,14 +140,17 @@ public class LobbyApi {
     }
 
     @GET
-    @Path("/test")
+    @Path("/{lobbyName}/print")
 
-    @Produces({"application/json"})
-    @io.swagger.annotations.ApiOperation(value = "test", notes = "test", response = Void.class, tags = {})
+    @Produces({"appliation/json"})
+    @io.swagger.annotations.ApiOperation(value = "List all lobbies", notes = "", response = String.class, responseContainer = "List", tags = {})
     @io.swagger.annotations.ApiResponses(value = {
-            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = Void.class)})
-    public Response lobbyTest(@Context SecurityContext securityContext)
+            @io.swagger.annotations.ApiResponse(code = 200, message = "Operation successful", response = String.class, responseContainer = "List"),
+
+            @io.swagger.annotations.ApiResponse(code = 404, message = "Lobby name not found", response = Void.class)})
+    public Response printVotesInLobby(@ApiParam(value = "Filter by lobby name") @PathParam("lobbyName") String lobbyName
+            , @Context SecurityContext securityContext)
             throws NotFoundException {
-        return delegate.lobbyTest(securityContext);
+        return delegate.printVotesInLobby(lobbyName, securityContext);
     }
 }
