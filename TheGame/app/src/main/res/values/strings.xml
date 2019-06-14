@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TheGame</string>
+    <string name="create_lobby">Create Lobby</string>
+</resources>
