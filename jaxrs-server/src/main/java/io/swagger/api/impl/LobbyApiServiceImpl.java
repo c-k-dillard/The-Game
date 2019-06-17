@@ -172,14 +172,6 @@ public class LobbyApiServiceImpl extends LobbyApiService {
             Statement stmt = PGDriver.database.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             PGDriver.database.setAutoCommit(false);
 
-            // Create list of selections
-//            ResultSet rs = stmt.executeQuery("SELECT options FROM selections WHERE lobby_name = '" +
-//                    lobbyName + "';");
-//
-//            while (rs.next()) {
-//                selection.add(new FinalVote(rs.getString("options")));
-//            }
-
             // Use selections list to establish voting information
             ResultSet rs = stmt.executeQuery("SELECT users, selections, vote_count from entries WHERE " +
                     "lobbies = '" + lobbyName + "';");
@@ -187,12 +179,6 @@ public class LobbyApiServiceImpl extends LobbyApiService {
             while (rs.next()) {
                 String select = rs.getString("selections");
                 int voteCount = rs.getInt("vote_count");
-//                for (int i = 0; i < selection.size(); ++i) {
-//
-//                    if (rs.getString("selections").equals(selection.get(i).selection)) {
-//                        selection.get(i).vote += rs.getInt("vote_count");
-//                    }
-//                }
 
                 if (voteMap.containsKey(select)) {
                     int currentCount = (int)voteMap.get(select);
@@ -201,18 +187,17 @@ public class LobbyApiServiceImpl extends LobbyApiService {
                     voteMap.put(select, voteCount);
                 }
             }
-
-//            for (int i = 0; i < selection.size(); ++i) {
-//                JSONObject j = new JSONObject();
-//                j.put("selection", selection.get(i).selection);
-//                j.put("vote", selection.get(i).vote);
-//                ja.add(j);
-//
-//            }
         } catch (Exception e) {
             PGDriver.exceptionHandle(e);
         }
 
         return Response.ok().entity(voteMap.toJSONString()).build();
+    }
+
+    @Override
+    public Response isReady(String lobbyName, SecurityContext securityContext) {
+
+
+        return Response.ok().entity("hai").build();
     }
 }

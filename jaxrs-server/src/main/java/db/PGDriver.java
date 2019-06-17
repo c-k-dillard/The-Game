@@ -23,6 +23,14 @@ public final class PGDriver {
                     "(lobby_name TEXT NOT NULL," +
                     " options TEXT NOT NULL)";
 
+    public static final String dropStatus = "DROP TABLE IF EXISTS status";
+    public static final String createStatus =
+            "CREATE TABLE status " +
+                    "(lobby TEXT NOT NULL, " +
+                    " username TEXT NOT NULL, " +
+                    " has_voted TEXT," +
+                    " UNIQUE (lobby, username))";
+
     private static final String url = "jdbc:postgresql://localhost:5432/";
 
     private PGDriver() {

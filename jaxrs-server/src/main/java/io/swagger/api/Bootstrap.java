@@ -31,12 +31,14 @@ public class Bootstrap extends HttpServlet {
         new SwaggerContextService().withServletConfig(config).updateSwagger(swagger);
 
         // Open postgres connection
+        String[] sqls = new String[] { PGDriver.dropSelections, PGDriver.createSelections, PGDriver.dropEntries,
+            PGDriver.createEntries, PGDriver.dropStatus, PGDriver.createStatus };
+
         PGDriver.database =
                 PGDriver.establishConnection("cdillard", "cdillard", "asdf");
 
-        PGDriver.executeStmt(PGDriver.database, PGDriver.dropEntries, "Drop entries");
-        PGDriver.executeStmt(PGDriver.database, PGDriver.createEntries, "Create entries");
-        PGDriver.executeStmt(PGDriver.database, PGDriver.dropSelections, "Drop options");
-        PGDriver.executeStmt(PGDriver.database, PGDriver.createSelections, "Create options");
+        for (String sql : sqls) {
+            PGDriver.executeStmt(PGDriver.database, sql);
+        }
     }
 }

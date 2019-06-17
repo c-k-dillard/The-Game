@@ -6,6 +6,7 @@ import io.swagger.model.*;
 
 import io.swagger.model.Votes;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class VotesApiServiceImpl extends VotesApiService {
     public Response createVote(Votes body, SecurityContext securityContext) throws NotFoundException {
         // Insert information into database
         try {
-            Statement stmt = PGDriver.database.createStatement();
+            Statement stmt = PGDriver.database.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             String sql = String.format("INSERT INTO entries (lobbies, users, selections, vote_count)" +
                     " VALUES('%s', '%s', '%s', %d)" +
                     " ON CONFLICT (lobbies, users, selections)" +
@@ -37,6 +38,47 @@ public class VotesApiServiceImpl extends VotesApiService {
             PGDriver.database.setAutoCommit(false);
 
             stmt.executeUpdate(sql);
+
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(options) FROM selections WHERE lobby_name = '" +
+                    body.getLobbyName() + "';");
+
+            int totalOptions = 0;
+
+            while (rs.next()) {
+                totalOptions = rs.getInt("count");
+            }
+
+            System.out.println(totalOptions);
+
+            rs = stmt.executeQuery(String.format("SELECT COUNT(users) FROM entries WHERE lobbies = " +
+                    "'%s' AND users = '%s'", body.getLobbyName(), body.getUser()));
+
+            int userCount = 0;
+            rs.beforeFirst();
+            while (rs.next()) {
+                userCount = rs.getInt("count");
+            }
+
+            System.out.println(userCount);
+
+            if (userCount == totalOptions) {
+                sql = String.format("INSERT INTO status (lobby, username, has_voted) " +
+                        " VALUES ('%s', '%s', '%s')" +
+                        " ON CONFLICT (lobby, username)" +
+                        " DO UPDATE" +
+                        " SET has_voted = EXCLUDED.has_voted" +
+                        ";", body.getLobbyName(), body.getUser(), "voted");
+                stmt.executeUpdate(sql);
+            } else {
+                sql = String.format("INSERT INTO status (lobby, username, has_voted) " +
+                        " VALUES ('%s', '%s', '%s')" +
+                        " ON CONFLICT (lobby, username)" +
+                        " DO UPDATE" +
+                        " SET has_voted = EXCLUDED.has_voted" +
+                        ";", body.getLobbyName(), body.getUser(), "voting");
+                stmt.executeUpdate(sql);
+            }
+
             stmt.close();
             PGDriver.database.commit();
         } catch (Exception e) {

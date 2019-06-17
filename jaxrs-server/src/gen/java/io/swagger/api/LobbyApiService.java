@@ -33,4 +33,6 @@ public abstract class LobbyApiService {
     public abstract Response removeFromLobby(String lobbyName, Alteration body, SecurityContext securityContext) throws NotFoundException;
 
     public abstract Response printVotesInLobby(String lobbyName, SecurityContext securityContext) throws NotFoundException;
+
+    public abstract Response isReady(String  lobbyName, SecurityContext securityContext) throws NotFoundException;
 }
