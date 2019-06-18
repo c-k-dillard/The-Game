@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TheGame</string>
     <string name="create_lobby">Create Lobby</string>
+    <string name="sample_text">TEST</string>
+    <string name="insert_lobby">Insert Lobby Name:</string>
+    <string name="lobby_name_button">Onto Selections</string>
 </resources>
