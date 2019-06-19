@@ -4,4 +4,7 @@
     <string name="sample_text">TEST</string>
     <string name="insert_lobby">Insert Lobby Name:</string>
     <string name="lobby_name_button">Onto Selections</string>
+    <string name="option_text">Insert Option Here:</string>
+    <string name="add_option">Add Option</string>
+    <string name="done">Done</string>
 </resources>

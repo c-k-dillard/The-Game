@@ -29,4 +29,20 @@ public final class LobbyDriver {
     public List<String> getOptions() {
         return options;
     }
+
+    public String getLobbyName() {
+        return lobbyName;
+    }
+
+    public void setLobbyName(String n) {
+        lobbyName = n;
+    }
+
+    public int getOptionsSize() {
+        return options.size();
+    }
+
+    public String getAtIndex(int i) {
+        return options.get(i);
+    }
 }
